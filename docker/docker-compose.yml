@@ -1,0 +1,31 @@
+version: '3'
+services:
+  broadcaster:
+    build:
+      context: ../
+      dockerfile: ./docker/broadcaster/Dockerfile
+    ports:
+      - "9010:9010"
+    links:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - BROADCAST_PORT=9010
+  listener:
+    build:
+      context: ../
+      dockerfile: ./docker/listener/Dockerfile
+    ports:
+      - "9011:9011"
+    links:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - LISTENER_PORT=9011
+      - LISTENER_CHANNEL='test'
+  redis:
+    container_name: "redis"
+    image: redis:6.2.4-buster
+    restart: always
+    expose:
+      - "6379"
