@@ -22,7 +22,7 @@ describe('Listener', () => {
   it('Client can connect', (done) => {
     const listenerClient = new Client({
       clientId: 'listener',
-      listenerUrl: `ws://${host}:${listenerPort}`,
+      listenerUrl: `ws://${host}:2000`,
     });
     listenerClient.start().then(done);
   });
